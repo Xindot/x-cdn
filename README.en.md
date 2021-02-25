@@ -1,1 +1,1 @@
-# https://x-cdn.cn/
+# x-cdn
