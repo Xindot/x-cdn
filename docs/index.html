@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端中文文档</title>
+  <script src="../npm/vue/2.6.10/vue.min.js"></script>
+  <script src="./index.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="list">
+      <div v-for="(el,index) in list" :key="index">
+        <span>{{el.name}}</span>
+        <a :href="el.url" target="_blank">{{el.url}}</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        list: list || []
+      }
+    })
+  </script>
+</body>
+
+</html>
