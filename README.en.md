@@ -1,1 +1,3 @@
 # x-cdn
+
+[docs](./docs/)
