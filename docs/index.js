@@ -28,6 +28,12 @@ var list = [{
 }, {
   name: 'Lodash',
   url: 'https://www.lodashjs.com/'
+}, {
+  name: 'Deno.js.cn',
+  url: 'https://deno.js.cn/'
+}, {
+  name: 'Deno.land',
+  url: 'https://deno.land/'
 }]
 
 list = list.sort(function (a, b) {
