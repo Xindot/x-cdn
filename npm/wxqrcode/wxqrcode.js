@@ -1807,10 +1807,10 @@ var createQrCodeImg = function (text, options) {
 
   return qr.createImgTag(cellsize, margin, size);
 };
-// var module = {}; 需要注释这一行，否则微信小程序无法使用
-// module.exports = {
-//   createQrCodeImg: createQrCodeImg
-// };
+var module = {}; //需要注释这一行，否则微信小程序无法使用
+module.exports = {
+  createQrCodeImg: createQrCodeImg
+};
 
 // export {
 //   createQrCodeImg
