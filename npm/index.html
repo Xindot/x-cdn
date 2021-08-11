@@ -12,6 +12,10 @@
       margin: 0;
     }
 
+    [v-cloak] {
+      display: none;
+    }
+
     body {
       padding: 10px;
     }
@@ -19,7 +23,7 @@
 </head>
 
 <body>
-  <div id="npmList">
+  <div id="npmList" v-cloak>
     <p v-for="item in fileList">
       <a :href="item">{{item}}</a>
     </p>
