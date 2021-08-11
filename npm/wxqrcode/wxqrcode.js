@@ -27,7 +27,7 @@
  * @param typeNumber 1 to 40
  * @param errorCorrectLevel 'L','M','Q','H'
  */
-var qrcode = function(typeNumber, errorCorrectLevel) {
+var qrcode = function (typeNumber, errorCorrectLevel) {
 
   var PAD0 = 0xEC;
   var PAD1 = 0x11;
@@ -41,10 +41,10 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
 
   var _this = {};
 
-  var makeImpl = function(test, maskPattern) {
+  var makeImpl = function (test, maskPattern) {
 
     _moduleCount = _typeNumber * 4 + 17;
-    _modules = function(moduleCount) {
+    _modules = function (moduleCount) {
       var modules = new Array(moduleCount);
       for (var row = 0; row < moduleCount; row += 1) {
         modules[row] = new Array(moduleCount);
@@ -73,7 +73,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     mapData(_dataCache, maskPattern);
   };
 
-  var setupPositionProbePattern = function(row, col) {
+  var setupPositionProbePattern = function (row, col) {
 
     for (var r = -1; r <= 7; r += 1) {
 
@@ -94,7 +94,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     }
   };
 
-  var getBestMaskPattern = function() {
+  var getBestMaskPattern = function () {
 
     var minLostPoint = 0;
     var pattern = 0;
@@ -114,7 +114,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     return pattern;
   };
 
-  var setupTimingPattern = function() {
+  var setupTimingPattern = function () {
 
     for (var r = 8; r < _moduleCount - 8; r += 1) {
       if (_modules[r][6] != null) {
@@ -131,7 +131,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     }
   };
 
-  var setupPositionAdjustPattern = function() {
+  var setupPositionAdjustPattern = function () {
 
     var pos = QRUtil.getPatternPosition(_typeNumber);
 
@@ -162,7 +162,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     }
   };
 
-  var setupTypeNumber = function(test) {
+  var setupTypeNumber = function (test) {
 
     var bits = QRUtil.getBCHTypeNumber(_typeNumber);
 
@@ -177,7 +177,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     }
   };
 
-  var setupTypeInfo = function(test, maskPattern) {
+  var setupTypeInfo = function (test, maskPattern) {
 
     var data = (_errorCorrectLevel << 3) | maskPattern;
     var bits = QRUtil.getBCHTypeInfo(data);
@@ -214,7 +214,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     _modules[_moduleCount - 8][8] = (!test);
   };
 
-  var mapData = function(data, maskPattern) {
+  var mapData = function (data, maskPattern) {
 
     var inc = -1;
     var row = _moduleCount - 1;
@@ -265,7 +265,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     }
   };
 
-  var createBytes = function(buffer, rsBlocks) {
+  var createBytes = function (buffer, rsBlocks) {
 
     var offset = 0;
 
@@ -330,7 +330,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     return data;
   };
 
-  var createData = function(typeNumber, errorCorrectLevel, dataList) {
+  var createData = function (typeNumber, errorCorrectLevel, dataList) {
 
     var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
 
@@ -385,28 +385,28 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     return createBytes(buffer, rsBlocks);
   };
 
-  _this.addData = function(data) {
+  _this.addData = function (data) {
     var newData = qr8BitByte(data);
     _dataList.push(newData);
     _dataCache = null;
   };
 
-  _this.isDark = function(row, col) {
+  _this.isDark = function (row, col) {
     if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) {
       throw new Error(row + ',' + col);
     }
     return _modules[row][col];
   };
 
-  _this.getModuleCount = function() {
+  _this.getModuleCount = function () {
     return _moduleCount;
   };
 
-  _this.make = function() {
+  _this.make = function () {
     makeImpl(false, getBestMaskPattern());
   };
 
-  _this.createTableTag = function(cellSize, margin) {
+  _this.createTableTag = function (cellSize, margin) {
 
     cellSize = cellSize || 2;
     margin = (typeof margin == 'undefined') ? cellSize * 4 : margin;
@@ -446,7 +446,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     return qrHtml;
   };
 
-  _this.createImgTag = function(cellSize, margin, size) {
+  _this.createImgTag = function (cellSize, margin, size) {
 
     cellSize = cellSize || 2;
     margin = (typeof margin == 'undefined') ? cellSize * 4 : margin;
@@ -454,7 +454,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
     var min = margin;
     var max = _this.getModuleCount() * cellSize + margin;
 
-    return createImgTag(size, size, function(x, y) {
+    return createImgTag(size, size, function (x, y) {
       if (min <= x && x < max && min <= y && y < max) {
         var c = Math.floor((x - min) / cellSize);
         var r = Math.floor((y - min) / cellSize);
@@ -472,7 +472,7 @@ var qrcode = function(typeNumber, errorCorrectLevel) {
 // qrcode.stringToBytes
 //---------------------------------------------------------------------
 
-qrcode.stringToBytes = function(s) {
+qrcode.stringToBytes = function (s) {
   var bytes = new Array();
   for (var i = 0; i < s.length; i += 1) {
     var c = s.charCodeAt(i);
@@ -490,14 +490,14 @@ qrcode.stringToBytes = function(s) {
  * [16bit Unicode],[16bit Bytes], ...
  * @param numChars
  */
-qrcode.createStringToBytes = function(unicodeData, numChars) {
+qrcode.createStringToBytes = function (unicodeData, numChars) {
 
   // create conversion map.
 
-  var unicodeMap = function() {
+  var unicodeMap = function () {
 
     var bin = base64DecodeInputStream(unicodeData);
-    var read = function() {
+    var read = function () {
       var b = bin.read();
       if (b == -1) throw new Error();
       return b;
@@ -525,7 +525,7 @@ qrcode.createStringToBytes = function(unicodeData, numChars) {
 
   var unknownChar = '?'.charCodeAt(0);
 
-  return function(s) {
+  return function (s) {
     var bytes = new Array();
     for (var i = 0; i < s.length; i += 1) {
       var c = s.charCodeAt(i);
@@ -592,7 +592,7 @@ var QRMaskPattern = {
 // QRUtil
 //---------------------------------------------------------------------
 
-var QRUtil = function() {
+var QRUtil = function () {
 
   var PATTERN_POSITION_TABLE = [
     [],
@@ -642,7 +642,7 @@ var QRUtil = function() {
 
   var _this = {};
 
-  var getBCHDigit = function(data) {
+  var getBCHDigit = function (data) {
     var digit = 0;
     while (data != 0) {
       digit += 1;
@@ -651,7 +651,7 @@ var QRUtil = function() {
     return digit;
   };
 
-  _this.getBCHTypeInfo = function(data) {
+  _this.getBCHTypeInfo = function (data) {
     var d = data << 10;
     while (getBCHDigit(d) - getBCHDigit(G15) >= 0) {
       d ^= (G15 << (getBCHDigit(d) - getBCHDigit(G15)));
@@ -659,7 +659,7 @@ var QRUtil = function() {
     return ((data << 10) | d) ^ G15_MASK;
   };
 
-  _this.getBCHTypeNumber = function(data) {
+  _this.getBCHTypeNumber = function (data) {
     var d = data << 12;
     while (getBCHDigit(d) - getBCHDigit(G18) >= 0) {
       d ^= (G18 << (getBCHDigit(d) - getBCHDigit(G18)));
@@ -667,44 +667,44 @@ var QRUtil = function() {
     return (data << 12) | d;
   };
 
-  _this.getPatternPosition = function(typeNumber) {
+  _this.getPatternPosition = function (typeNumber) {
     return PATTERN_POSITION_TABLE[typeNumber - 1];
   };
 
-  _this.getMaskFunction = function(maskPattern) {
+  _this.getMaskFunction = function (maskPattern) {
 
     switch (maskPattern) {
 
       case QRMaskPattern.PATTERN000:
-        return function(i, j) {
+        return function (i, j) {
           return (i + j) % 2 == 0;
         };
       case QRMaskPattern.PATTERN001:
-        return function(i, ) {
+        return function (i, ) {
           return i % 2 == 0;
         };
       case QRMaskPattern.PATTERN010:
-        return function(i, j) {
+        return function (i, j) {
           return j % 3 == 0;
         };
       case QRMaskPattern.PATTERN011:
-        return function(i, j) {
+        return function (i, j) {
           return (i + j) % 3 == 0;
         };
       case QRMaskPattern.PATTERN100:
-        return function(i, j) {
+        return function (i, j) {
           return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0;
         };
       case QRMaskPattern.PATTERN101:
-        return function(i, j) {
+        return function (i, j) {
           return (i * j) % 2 + (i * j) % 3 == 0;
         };
       case QRMaskPattern.PATTERN110:
-        return function(i, j) {
+        return function (i, j) {
           return ((i * j) % 2 + (i * j) % 3) % 2 == 0;
         };
       case QRMaskPattern.PATTERN111:
-        return function(i, j) {
+        return function (i, j) {
           return ((i * j) % 3 + (i + j) % 2) % 2 == 0;
         };
 
@@ -713,7 +713,7 @@ var QRUtil = function() {
     }
   };
 
-  _this.getErrorCorrectPolynomial = function(errorCorrectLength) {
+  _this.getErrorCorrectPolynomial = function (errorCorrectLength) {
     var a = qrPolynomial([1], 0);
     for (var i = 0; i < errorCorrectLength; i += 1) {
       a = a.multiply(qrPolynomial([1, QRMath.gexp(i)], 0));
@@ -721,7 +721,7 @@ var QRUtil = function() {
     return a;
   };
 
-  _this.getLengthInBits = function(mode, type) {
+  _this.getLengthInBits = function (mode, type) {
 
     if (1 <= type && type < 10) {
 
@@ -779,7 +779,7 @@ var QRUtil = function() {
     }
   };
 
-  _this.getLostPoint = function(qrcode) {
+  _this.getLostPoint = function (qrcode) {
 
     var moduleCount = qrcode.getModuleCount();
 
@@ -891,7 +891,7 @@ var QRUtil = function() {
 // QRMath
 //---------------------------------------------------------------------
 
-var QRMath = function() {
+var QRMath = function () {
 
   var EXP_TABLE = new Array(256);
   var LOG_TABLE = new Array(256);
@@ -912,7 +912,7 @@ var QRMath = function() {
 
   var _this = {};
 
-  _this.glog = function(n) {
+  _this.glog = function (n) {
 
     if (n < 1) {
       throw new Error('glog(' + n + ')');
@@ -921,7 +921,7 @@ var QRMath = function() {
     return LOG_TABLE[n];
   };
 
-  _this.gexp = function(n) {
+  _this.gexp = function (n) {
 
     while (n < 0) {
       n += 255;
@@ -947,7 +947,7 @@ function qrPolynomial(num, shift) {
     throw new Error(num.length + '/' + shift);
   }
 
-  var _num = function() {
+  var _num = function () {
     var offset = 0;
     while (offset < num.length && num[offset] == 0) {
       offset += 1;
@@ -961,15 +961,15 @@ function qrPolynomial(num, shift) {
 
   var _this = {};
 
-  _this.getAt = function(index) {
+  _this.getAt = function (index) {
     return _num[index];
   };
 
-  _this.getLength = function() {
+  _this.getLength = function () {
     return _num.length;
   };
 
-  _this.multiply = function(e) {
+  _this.multiply = function (e) {
 
     var num = new Array(_this.getLength() + e.getLength() - 1);
 
@@ -982,7 +982,7 @@ function qrPolynomial(num, shift) {
     return qrPolynomial(num, 0);
   };
 
-  _this.mod = function(e) {
+  _this.mod = function (e) {
 
     if (_this.getLength() - e.getLength() < 0) {
       return _this;
@@ -1010,7 +1010,7 @@ function qrPolynomial(num, shift) {
 // QRRSBlock
 //---------------------------------------------------------------------
 
-var QRRSBlock = function() {
+var QRRSBlock = function () {
 
 
   // [1: [L, M, Q, H], ..]
@@ -1177,7 +1177,7 @@ var QRRSBlock = function() {
     [20, 45, 15, 61, 46, 16]
   ];
 
-  var qrRSBlock = function(totalCount, dataCount) {
+  var qrRSBlock = function (totalCount, dataCount) {
     var _this = {};
     _this.totalCount = totalCount;
     _this.dataCount = dataCount;
@@ -1186,7 +1186,7 @@ var QRRSBlock = function() {
 
   var _this = {};
 
-  var getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+  var getRsBlockTable = function (typeNumber, errorCorrectLevel) {
 
     switch (errorCorrectLevel) {
       case QRErrorCorrectLevel.L:
@@ -1202,7 +1202,7 @@ var QRRSBlock = function() {
     }
   };
 
-  _this.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+  _this.getRSBlocks = function (typeNumber, errorCorrectLevel) {
 
     var rsBlock = getRsBlockTable(typeNumber, errorCorrectLevel);
 
@@ -1236,33 +1236,33 @@ var QRRSBlock = function() {
 // qrBitBuffer
 //---------------------------------------------------------------------
 
-var qrBitBuffer = function() {
+var qrBitBuffer = function () {
 
   var _buffer = new Array();
   var _length = 0;
 
   var _this = {};
 
-  _this.getBuffer = function() {
+  _this.getBuffer = function () {
     return _buffer;
   };
 
-  _this.getAt = function(index) {
+  _this.getAt = function (index) {
     var bufIndex = Math.floor(index / 8);
     return ((_buffer[bufIndex] >>> (7 - index % 8)) & 1) == 1;
   };
 
-  _this.put = function(num, length) {
+  _this.put = function (num, length) {
     for (var i = 0; i < length; i += 1) {
       _this.putBit(((num >>> (length - i - 1)) & 1) == 1);
     }
   };
 
-  _this.getLengthInBits = function() {
+  _this.getLengthInBits = function () {
     return _length;
   };
 
-  _this.putBit = function(bit) {
+  _this.putBit = function (bit) {
 
     var bufIndex = Math.floor(_length / 8);
     if (_buffer.length <= bufIndex) {
@@ -1283,7 +1283,7 @@ var qrBitBuffer = function() {
 // qr8BitByte
 //---------------------------------------------------------------------
 
-var qr8BitByte = function(data) {
+var qr8BitByte = function (data) {
 
   var _mode = QRMode.MODE_8BIT_BYTE;
   var _data = data;
@@ -1327,15 +1327,15 @@ var qr8BitByte = function(data) {
 
   var _bytes = _parsedData;
 
-  _this.getMode = function() {
+  _this.getMode = function () {
     return _mode;
   };
 
-  _this.getLength = function() {
+  _this.getLength = function () {
     return _bytes.length;
   };
 
-  _this.write = function(buffer) {
+  _this.write = function (buffer) {
     for (var i = 0; i < _bytes.length; i += 1) {
       buffer.put(_bytes[i], 8);
     }
@@ -1352,22 +1352,22 @@ var qr8BitByte = function(data) {
 // byteArrayOutputStream
 //---------------------------------------------------------------------
 
-var byteArrayOutputStream = function() {
+var byteArrayOutputStream = function () {
 
   var _bytes = new Array();
 
   var _this = {};
 
-  _this.writeByte = function(b) {
+  _this.writeByte = function (b) {
     _bytes.push(b & 0xff);
   };
 
-  _this.writeShort = function(i) {
+  _this.writeShort = function (i) {
     _this.writeByte(i);
     _this.writeByte(i >>> 8);
   };
 
-  _this.writeBytes = function(b, off, len) {
+  _this.writeBytes = function (b, off, len) {
     off = off || 0;
     len = len || b.length;
     for (var i = 0; i < len; i += 1) {
@@ -1375,17 +1375,17 @@ var byteArrayOutputStream = function() {
     }
   };
 
-  _this.writeString = function(s) {
+  _this.writeString = function (s) {
     for (var i = 0; i < s.length; i += 1) {
       _this.writeByte(s.charCodeAt(i));
     }
   };
 
-  _this.toByteArray = function() {
+  _this.toByteArray = function () {
     return _bytes;
   };
 
-  _this.toString = function() {
+  _this.toString = function () {
     var s = '';
     s += '[';
     for (var i = 0; i < _bytes.length; i += 1) {
@@ -1405,7 +1405,7 @@ var byteArrayOutputStream = function() {
 // base64EncodeOutputStream
 //---------------------------------------------------------------------
 
-var base64EncodeOutputStream = function() {
+var base64EncodeOutputStream = function () {
 
   var _buffer = 0;
   var _buflen = 0;
@@ -1414,11 +1414,11 @@ var base64EncodeOutputStream = function() {
 
   var _this = {};
 
-  var writeEncoded = function(b) {
+  var writeEncoded = function (b) {
     _base64 += String.fromCharCode(encode(b & 0x3f));
   };
 
-  var encode = function(n) {
+  var encode = function (n) {
     if (n < 0) {
       // error.
     } else if (n < 26) {
@@ -1435,7 +1435,7 @@ var base64EncodeOutputStream = function() {
     throw new Error('n:' + n);
   };
 
-  _this.writeByte = function(n) {
+  _this.writeByte = function (n) {
 
     _buffer = (_buffer << 8) | (n & 0xff);
     _buflen += 8;
@@ -1447,7 +1447,7 @@ var base64EncodeOutputStream = function() {
     }
   };
 
-  _this.flush = function() {
+  _this.flush = function () {
 
     if (_buflen > 0) {
       writeEncoded(_buffer << (6 - _buflen));
@@ -1464,7 +1464,7 @@ var base64EncodeOutputStream = function() {
     }
   };
 
-  _this.toString = function() {
+  _this.toString = function () {
     return _base64;
   };
 
@@ -1475,7 +1475,7 @@ var base64EncodeOutputStream = function() {
 // base64DecodeInputStream
 //---------------------------------------------------------------------
 
-var base64DecodeInputStream = function(str) {
+var base64DecodeInputStream = function (str) {
 
   var _str = str;
   var _pos = 0;
@@ -1484,7 +1484,7 @@ var base64DecodeInputStream = function(str) {
 
   var _this = {};
 
-  _this.read = function() {
+  _this.read = function () {
 
     while (_buflen < 8) {
 
@@ -1515,7 +1515,7 @@ var base64DecodeInputStream = function(str) {
     return n;
   };
 
-  var decode = function(c) {
+  var decode = function (c) {
     if (0x41 <= c && c <= 0x5a) {
       return c - 0x41;
     } else if (0x61 <= c && c <= 0x7a) {
@@ -1538,7 +1538,7 @@ var base64DecodeInputStream = function(str) {
 // gifImage (B/W)
 //---------------------------------------------------------------------
 
-var gifImage = function(width, height) {
+var gifImage = function (width, height) {
 
   var _width = width;
   var _height = height;
@@ -1546,11 +1546,11 @@ var gifImage = function(width, height) {
 
   var _this = {};
 
-  _this.setPixel = function(x, y, pixel) {
+  _this.setPixel = function (x, y, pixel) {
     _data[y * _width + x] = pixel;
   };
 
-  _this.write = function(out) {
+  _this.write = function (out) {
 
     //---------------------------------
     // GIF Signature
@@ -1618,7 +1618,7 @@ var gifImage = function(width, height) {
     out.writeString(';');
   };
 
-  var bitOutputStream = function(out) {
+  var bitOutputStream = function (out) {
 
     var _out = out;
     var _bitLength = 0;
@@ -1626,7 +1626,7 @@ var gifImage = function(width, height) {
 
     var _this = {};
 
-    _this.write = function(data, length) {
+    _this.write = function (data, length) {
 
       if ((data >>> length) != 0) {
         throw new Error('length over');
@@ -1644,7 +1644,7 @@ var gifImage = function(width, height) {
       _bitLength = _bitLength + length;
     };
 
-    _this.flush = function() {
+    _this.flush = function () {
       if (_bitLength > 0) {
         _out.writeByte(_bitBuffer);
       }
@@ -1653,7 +1653,7 @@ var gifImage = function(width, height) {
     return _this;
   };
 
-  var getLZWRaster = function(lzwMinCodeSize) {
+  var getLZWRaster = function (lzwMinCodeSize) {
 
     var clearCode = 1 << lzwMinCodeSize;
     var endCode = (1 << lzwMinCodeSize) + 1;
@@ -1715,14 +1715,14 @@ var gifImage = function(width, height) {
     return byteOut.toByteArray();
   };
 
-  var lzwTable = function() {
+  var lzwTable = function () {
 
     var _map = {};
     var _size = 0;
 
     var _this = {};
 
-    _this.add = function(key) {
+    _this.add = function (key) {
       if (_this.contains(key)) {
         throw new Error('dup key:' + key);
       }
@@ -1730,15 +1730,15 @@ var gifImage = function(width, height) {
       _size += 1;
     };
 
-    _this.size = function() {
+    _this.size = function () {
       return _size;
     };
 
-    _this.indexOf = function(key) {
+    _this.indexOf = function (key) {
       return _map[key];
     };
 
-    _this.contains = function(key) {
+    _this.contains = function (key) {
       return typeof _map[key] != 'undefined';
     };
 
@@ -1748,7 +1748,7 @@ var gifImage = function(width, height) {
   return _this;
 };
 
-var createImgTag = function(width, height, getPixel) {
+var createImgTag = function (width, height, getPixel) {
 
   var gif = gifImage(width, height);
   for (var y = 0; y < height; y += 1) {
@@ -1777,7 +1777,7 @@ var createImgTag = function(width, height, getPixel) {
 //---------------------------------------------------------------------
 // returns qrcode function.
 
-var createQrCodeImg = function(text, options) {
+var createQrCodeImg = function (text, options) {
   options = options || {};
   var typeNumber = options.typeNumber || 4;
   var errorCorrectLevel = options.errorCorrectLevel || 'M';
