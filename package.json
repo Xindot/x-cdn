@@ -1,0 +1,32 @@
+{
+  "name": "x-cdn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "del_DS_Store": "find . -name '*.DS_Store' -type f -delete",
+    "npmList": "node tool/npmList.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@npm": "./npm",
+    "@docs": "./docs"
+  }
+}

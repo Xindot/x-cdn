@@ -19,60 +19,22 @@
 </head>
 
 <body>
-  <p>
-    <a href="./antd-mobile/2.3.3/antd-mobile.min.css">antd-mobile/2.3.3/antd-mobile.min.css</a>
-    <span> , </span>
-    <a href="./antd-mobile/2.3.3/antd-mobile.min.js">antd-mobile/2.3.3/antd-mobile.min.js</a>
-  </p>
-  <p>
-    <a href="./axios/0.19.0/axios.min.js">axios/0.19.0/axios.min.js</a>
-  </p>
-  <p>
-    <a href="./blueimp-md5/2.10.0/js/md5.min.js">blueimp-md5/2.10.0/js/md5.min.js</a>
-  </p>
-  <p>
-    <a href="./copy-to-clipboard/3.1.1/index.min.js">copy-to-clipboard/3.1.1/index.min.js</a>
-  </p>
-  <p>
-    <a href="./dayjs/1.8.15/dayjs.min.js">dayjs/1.8.15/dayjs.min.js</a>
-  </p>
-  <p>
-    <a href="./echarts/4.2.1/echarts.min.js">echarts/4.2.1/echarts.min.js</a>
-  </p>
-  <p>
-    <a href="./element-ui/2.11.1/lib/theme-chalk/index.css">element-ui/2.11.1/lib/theme-chalk/index.css</a>
-    <span> , </span>
-    <a href="./element-ui/2.11.1/lib/index.js">element-ui/2.11.1/lib/index.js</a>
-  </p>
-  <p>
-    <a href="./mescroll.js/1.4.1/mescroll.min.css">mescroll.js/1.4.1/mescroll.min.css</a>
-    <span> , </span>
-    <a href="./mescroll.js/1.4.1/mescroll.min.js">mescroll.js/1.4.1/mescroll.min.js</a>
-  </p>
-  <p>
-    <a href="./mint-ui/2.2.13/lib/style.css">mint-ui/2.2.13/lib/style.css</a>
-    <span> , </span>
-    <a href="./mint-ui/2.2.13/lib/index.js">mint-ui/2.2.13/lib/index.js</a>
-  </p>
-  <p>
-    <a href="./vant/2.8/lib/index.css">vant/2.8/lib/index.css</a>
-    <span> , </span>
-    <a href="./vant/2.8/lib/vant.min.js">vant/2.8/lib/vant.min.js</a>
-  </p>
-  <p>
-    <a href="./vConsole/3.3.2/vconsole.min.js">vConsole/3.3.2/vconsole.min.js</a>
-  </p>
-  <p>
-    <a href="./vue/2.6.10/vue.min.js">vue/2.6.10/vue.min.js</a>
-  </p>
-  <p>
-    <a href="./vue-router/3.0.6/vue-router.min.js">vue-router/3.0.6/vue-router.min.js</a>
-  </p>
-  <p>
-    ...
-  </p>
+  <div id="npmList">
+    <p v-for="item in fileList">
+      <a :href="item">{{item}}</a>
+    </p>
+  </div>
+  <script src="./vue/3.2.1/vue.global.prod.js"></script>
+  <script src="./index.js"></script>
   <script>
-
+    var npmList = {
+      data() {
+        return {
+          fileList: fileList || []
+        }
+      }
+    }
+    Vue.createApp(npmList).mount('#npmList')
   </script>
 </body>
 
