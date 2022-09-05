@@ -7,7 +7,7 @@
     "del_DS_Store": "find . -name '*.DS_Store' -type f -delete",
     "npmList": "node tool/npmList.js",
     "gitPush": "git status && git add -A && git status && git commit -am 'gx' && git status && git push origin master && git status",
-    "gitPush2": "git status && git add -A && git status && git commit -am 'gx' && git status && git push github master && git status"
+    "github": "git push github master"
   },
   "repository": {
     "type": "git",
